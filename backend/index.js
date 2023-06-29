@@ -16,18 +16,13 @@ const io = socketIO(server, {
 });
 
 io.on('connection', socket => {
-  console.log('A user connected');
-
-  console.log("user connected with id",socket.client.id);
-
-  socket.on('message', message => {
-    console.log('Received message:', message);
-    io.emit('message', message); // Broadcast the message to all connected clients
+  socket.on('message-from-client', message => {
+    socket.broadcast.emit('message-from-server', message); 
   });
 
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
+//   socket.on('disconnect', () => {
+//     console.log('A user disconnected');
+//   });
 });
 
 const port = 3001;
